@@ -10,24 +10,23 @@ def checkmate(board: str):
             print("Error")
             return
 
-        # find king
-        king_pos = None
+        # find king coord
+        kingcoord = None
         for r, row in enumerate(rows):
             for c, column in enumerate(row):
                 if column == 'K':
-                    if king_pos:
+                    if kingcoord:
                         print("Error")  # in the case of repeated K input
                         return
-                    king_pos = (r, c)
+                    kingcoord = (r, c)
 
-        if not king_pos:
-            print("Error")  # no king
+        if not kingcoord:
+            print("Error")  # print if no king present
             return
 
-        # helper script: check ranged threats
-        # direction in row and column (dr, dc), 
+        # helper script: check ranged threats (B, R) by enabling scanner scripts (below) to find king
         def check_direction(dr, dc, valid_pieces):
-            r, c = king_pos
+            r, c = kingcoord
             while True:
                 r += dr
                 c += dc
@@ -41,10 +40,9 @@ def checkmate(board: str):
                 else:
                     return False
 
-        kr, kc = king_pos
+        kr, kc = kingcoord
 
-        # pawn (upwards diagonal /// according to the instructions) PPPPPPP
-        # logic checks if 
+        # pawn (upwards diagonal /// according to the instructions)
         for dr, dc in [(1, -1), (1, 1)]:
             r, c = kr + dr, kc + dc
             if 0 <= r < size and 0 <= c < size:
@@ -64,6 +62,7 @@ def checkmate(board: str):
                 print("Success")
                 return
 
+        # if things are not 
         print("Fail")
 
     except Exception:
